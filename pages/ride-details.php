@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../css/components/buttons.css">
     <link rel="stylesheet" href="../css/components/tables.css">
     <link rel="stylesheet" href="../css/components/cards.css">
-    <link rel="stylesheet" href="../css/ride-details.css">
+    <link rel="stylesheet" href="../css/pages/ride-details.css">
 </head>
 
 <body>
