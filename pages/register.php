@@ -19,7 +19,7 @@
     <div class="app-container">
         <?php
         $activePage = 'inicio';
-        include '../components/header.php'
+        include 'components/header.php'
         ?>
 
         <!-- Contenido principal -->
@@ -32,16 +32,16 @@
                     </div>
 
                     <div class="tabs">
-                        <button class="tab active" data-tab="driver-tab">
+                        <button id="driver-tab" class="tab active" data-tab="driver-tab">
                             Chofer
                         </button>
-                        <button class="tab" data-tab="passenger-tab">
+                        <button id="passenger-tab" class="tab" data-tab="passenger-tab">
                             Pasajero
                         </button>
                     </div>
 
-                    <!-- Formulario de chofer -->
-                    <div id="driver-tab" class="tab-content active">
+                    <!-- Formulario de chofer y pasajero -->
+                    <div class="tab-content active">
                         <form class="form">
                             <div class="form-row">
                                 <div class="form-column">
@@ -160,6 +160,7 @@
 
                             <div class="form-group">
                                 <button
+                                    id="register-btn"
                                     type="submit"
                                     class="btn btn-primary"
                                     style="width: 100%">
@@ -169,147 +170,18 @@
                         </form>
                     </div>
 
-                    <!-- Formulario de pasajero -->
-                    <div id="passenger-tab" class="tab-content">
-                        <form class="form">
-                            <div class="form-row">
-                                <div class="form-column">
-                                    <div class="form-group">
-                                        <label
-                                            class="form-label"
-                                            for="passenger-firstname">Nombre</label>
-                                        <input
-                                            type="text"
-                                            id="passenger-firstname"
-                                            class="form-input"
-                                            placeholder="Nombre" />
-                                    </div>
-                                </div>
-                                <div class="form-column">
-                                    <div class="form-group">
-                                        <label
-                                            class="form-label"
-                                            for="passenger-lastname">Apellido</label>
-                                        <input
-                                            type="text"
-                                            id="passenger-lastname"
-                                            class="form-input"
-                                            placeholder="Apellido" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-column">
-                                    <div class="form-group">
-                                        <label
-                                            class="form-label"
-                                            for="passenger-id">Cédula</label>
-                                        <input
-                                            type="text"
-                                            id="passenger-id"
-                                            class="form-input"
-                                            placeholder="Número de cédula" />
-                                    </div>
-                                </div>
-                                <div class="form-column">
-                                    <div class="form-group">
-                                        <label
-                                            class="form-label"
-                                            for="passenger-birthdate">Fecha de nacimiento</label>
-                                        <input
-                                            type="date"
-                                            id="passenger-birthdate"
-                                            class="form-input" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-column">
-                                    <div class="form-group">
-                                        <label
-                                            class="form-label"
-                                            for="passenger-email">Correo electrónico</label>
-                                        <input
-                                            type="email"
-                                            id="passenger-email"
-                                            class="form-input"
-                                            placeholder="email@ejemplo.com" />
-                                    </div>
-                                </div>
-                                <div class="form-column">
-                                    <div class="form-group">
-                                        <label
-                                            class="form-label"
-                                            for="passenger-phone">Teléfono</label>
-                                        <input
-                                            type="tel"
-                                            id="passenger-phone"
-                                            class="form-input"
-                                            placeholder="Teléfono" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label
-                                    class="form-label"
-                                    for="passenger-photo">Foto</label>
-                                <input
-                                    type="file"
-                                    id="passenger-photo"
-                                    class="form-input" />
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-column">
-                                    <div class="form-group">
-                                        <label
-                                            class="form-label"
-                                            for="passenger-password">Contraseña</label>
-                                        <input
-                                            type="password"
-                                            id="passenger-password"
-                                            class="form-input"
-                                            placeholder="Contraseña" />
-                                    </div>
-                                </div>
-                                <div class="form-column">
-                                    <div class="form-group">
-                                        <label
-                                            class="form-label"
-                                            for="passenger-confirm-password">Confirmar contraseña</label>
-                                        <input
-                                            type="password"
-                                            id="passenger-confirm-password"
-                                            class="form-input"
-                                            placeholder="Confirmar contraseña" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <button
-                                    type="submit"
-                                    class="btn btn-primary"
-                                    style="width: 100%">
-                                    Registrarse como Pasajero
-                                </button>
-                            </div>
-                        </form>
-                    </div>
 
                     <div class="auth-footer">
                         <p>
                             ¿Ya tienes una cuenta?
-                            <a href="login.html" class="auth-link">Iniciar sesión</a>
+                            <a href="../pages/login.php" class="auth-link">Iniciar sesión</a>
                         </p>
                     </div>
                 </div>
             </section>
         </main>
     </div>
+    <script src="../js/registration.js"></script>
 </body>
 
 </html>

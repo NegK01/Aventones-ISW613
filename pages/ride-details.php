@@ -19,7 +19,7 @@
     <div class="app-container">
         <?php
         $activePage = 'details';
-        include '../components/header.php';
+        include 'components/header.php';
         ?>
         <main class="main-content">
             <div class="section">

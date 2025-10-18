@@ -18,7 +18,7 @@
     <div class="app-container">
         <?php
         $activePage = 'profile';
-        include '../components/header.php';
+        include 'components/header.php';
         ?>
         <main class="main-content">
             <div class="section">
