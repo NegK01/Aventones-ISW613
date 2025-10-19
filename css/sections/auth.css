@@ -18,3 +18,9 @@
     color: var(--color-accent);
     text-decoration: none;
 }
+.auth-message {
+    color: var(--color-accent);
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+}

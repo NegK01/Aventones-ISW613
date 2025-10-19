@@ -31,6 +31,8 @@
                         <p>Crea una nueva cuenta</p>
                     </div>
 
+                    <div id="form-message" class="auth-message"></div>
+
                     <div class="tabs">
                         <button id="driver-tab" class="tab active" data-tab="driver-tab">
                             Chofer
@@ -42,7 +44,7 @@
 
                     <!-- Formulario de chofer y pasajero -->
                     <div class="tab-content active">
-                        <form class="form">
+                        <form class="form" id="register-form" method="POST" enctype="multipart/form-data">
                             <div class="form-row">
                                 <div class="form-column">
                                     <div class="form-group">
@@ -51,6 +53,7 @@
                                             for="driver-firstname">Nombre</label>
                                         <input
                                             type="text"
+                                            name="name"
                                             id="driver-firstname"
                                             class="form-input"
                                             placeholder="Nombre" />
@@ -63,6 +66,7 @@
                                             for="driver-lastname">Apellido</label>
                                         <input
                                             type="text"
+                                            name="lastname"
                                             id="driver-lastname"
                                             class="form-input"
                                             placeholder="Apellido" />
@@ -78,6 +82,7 @@
                                             for="driver-id">Cédula</label>
                                         <input
                                             type="text"
+                                            name="id"
                                             id="driver-id"
                                             class="form-input"
                                             placeholder="Número de cédula" />
@@ -90,6 +95,7 @@
                                             for="driver-birthdate">Fecha de nacimiento</label>
                                         <input
                                             type="date"
+                                            name="birthdate"
                                             id="driver-birthdate"
                                             class="form-input" />
                                     </div>
@@ -104,6 +110,7 @@
                                             for="driver-email">Correo electrónico</label>
                                         <input
                                             type="email"
+                                            name="email"
                                             id="driver-email"
                                             class="form-input"
                                             placeholder="email@ejemplo.com" />
@@ -116,6 +123,7 @@
                                             for="driver-phone">Teléfono</label>
                                         <input
                                             type="tel"
+                                            name="phone"
                                             id="driver-phone"
                                             class="form-input"
                                             placeholder="Teléfono" />
@@ -127,8 +135,10 @@
                                 <label class="form-label" for="driver-photo">Foto</label>
                                 <input
                                     type="file"
+                                    name="photo"
                                     id="driver-photo"
-                                    class="form-input" />
+                                    class="form-input"
+                                    accept=".jpg, .jpeg, .png" />
                             </div>
 
                             <div class="form-row">
@@ -139,6 +149,7 @@
                                             for="driver-password">Contraseña</label>
                                         <input
                                             type="password"
+                                            name="password"
                                             id="driver-password"
                                             class="form-input"
                                             placeholder="Contraseña" />
@@ -151,6 +162,7 @@
                                             for="driver-confirm-password">Confirmar contraseña</label>
                                         <input
                                             type="password"
+                                            name="password-confirmation"
                                             id="driver-confirm-password"
                                             class="form-input"
                                             placeholder="Confirmar contraseña" />
@@ -161,6 +173,7 @@
                             <div class="form-group">
                                 <button
                                     id="register-btn"
+                                    name="register-btn"
                                     type="submit"
                                     class="btn btn-primary"
                                     style="width: 100%">
@@ -169,8 +182,6 @@
                             </div>
                         </form>
                     </div>
-
-
                     <div class="auth-footer">
                         <p>
                             ¿Ya tienes una cuenta?
