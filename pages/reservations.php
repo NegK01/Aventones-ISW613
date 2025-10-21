@@ -57,7 +57,7 @@
                                         <td><span class="badge green-badge">Confirmado</span></td>
                                         <td>
                                             <div class="table-actions">
-                                                <a href="ride-details.html" class="btn btn-secondary">Detalles</a>
+                                                <a href="rideDetails.php" class="btn btn-secondary">Detalles</a>
                                                 <button class="btn btn-secondary">Cancelar</button>
                                             </div>
                                         </td>
@@ -72,7 +72,7 @@
                                         <td><span class="badge yellow-badge">Pendiente</span></td>
                                         <td>
                                             <div class="table-actions">
-                                                <a href="ride-details.html" class="btn btn-secondary">Detalles</a>
+                                                <a href="rideDetails.php" class="btn btn-secondary">Detalles</a>
                                                 <button class="btn btn-secondary">Cancelar</button>
                                             </div>
                                         </td>
@@ -107,7 +107,7 @@
                                         <td><span class="badge green-badge">Completado</span></td>
                                         <td>
                                             <div class="table-actions">
-                                                <a href="ride-details.html" class="btn btn-secondary">Detalles</a>
+                                                <a href="rideDetails.php" class="btn btn-secondary">Detalles</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -121,7 +121,7 @@
                                         <td><span class="badge green-badge">Completado</span></td>
                                         <td>
                                             <div class="table-actions">
-                                                <a href="ride-details.html" class="btn btn-secondary">Detalles</a>
+                                                <a href="rideDetails.php" class="btn btn-secondary">Detalles</a>
                                             </div>
                                         </td>
                                     </tr>

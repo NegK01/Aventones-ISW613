@@ -16,26 +16,28 @@ $id = $_GET['id'] ?? null;
 
 // Mapeo de los nombres de las clases
 $allowedControllers = [
-    'auth'         => 'AuthController',
-    'rides'        => 'RideController',
-    'vehicles'     => 'VehicleController',
-    'reservations' => 'ReservationController',
-    'profile'      => 'ProfileController'
+    'auth'         => 'authController',
+    'rides'        => 'rideController',
+    'vehicles'     => 'vehicleController',
+    'reservations' => 'reservationController',
+    'profile'      => 'profileController'
 ];
 
 // Validar si el controlador dado esta en nuestro map
 if (!isset($allowedControllers[$controllerName])) {
     http_response_code(400);
-    exit('Controlador no válido');
+    echo json_encode(['error' => 'Controlador no válido']);
+    exit;
 }
 
 $className = $allowedControllers[$controllerName];
-$controllerFile = __DIR__ . "/{$className}.php"; 
+$controllerFile = __DIR__ . "/{$controllerName}/{$className}.php";
 
 // Buscamos el archivo controlador
 if (!file_exists($controllerFile)) {
     http_response_code(500);
-    exit("Archivo del controlador no encontrado: {$className}.php");
+    echo json_encode(['error' => "Archivo del controlador no encontrado: {$controllerFile}"]);
+    exit;
 }
 
 require_once $controllerFile;
@@ -46,12 +48,18 @@ $controller = new $className($conn);
 // Validar metodo
 if (!method_exists($controller, $action)) {
     http_response_code(400);
-    exit('Acción no valida');
+    echo json_encode(['error' => 'Acción no válida']);
+    exit;
 }
 
 // Validar si tiene un id y luego ejecutar la accion
-if ($id !== null) {
-    $controller->$action($id);
-} else {
-    $controller->$action();
+try {
+    if ($id !== null) {
+        $controller->$action($id);
+    } else {
+        $controller->$action();
+    }
+} catch (Throwable $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Excepcion de action: ' . $e->getMessage()]);
 }
