@@ -11,8 +11,9 @@ class usuario
     private $passwordHash;
     private $foto;
     private $estado; // [1= Confirmado] [2= Pendiente] [3= Rechazado] [4= Activo] [5= Inactivo]
+    private $token;
 
-    public function __construct($rol = 2, $cedula, $nombre, $apellido, $nacimiento, $correo, $telefono, $passwordHash, $foto = null, $estado = 2) 
+    public function __construct($rol = 2, $cedula, $nombre, $apellido, $nacimiento, $correo, $telefono, $passwordHash, $foto = null, $estado = 2, $token) 
     {
         $this->rol = $rol;
         $this->cedula = $cedula;
@@ -24,7 +25,7 @@ class usuario
         $this->passwordHash = $passwordHash;
         $this->foto = $foto;
         $this->estado = $estado;
-        
+        $this->token = $token;
     }
 
     // Getters
@@ -76,5 +77,10 @@ class usuario
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    public function getToken()
+    {
+        return $this->token;
     }
 }

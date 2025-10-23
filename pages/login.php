@@ -57,7 +57,7 @@
                     <div class="auth-footer">
                         <p>
                             ¿No tienes una cuenta?
-                            <a href="../pages/register.php" class="auth-link">Regístrate</a>
+                            <a href="../pages/registration.php" class="auth-link">Regístrate</a>
                         </p>
                     </div>
                 </div>

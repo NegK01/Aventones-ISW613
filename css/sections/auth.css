@@ -19,8 +19,14 @@
     text-decoration: none;
 }
 .auth-message {
-    color: var(--color-accent);
-    display: flex;
-    justify-content: center;
+    display: block;
+    text-align: center;
     font-weight: bold;
+    white-space: pre-line; /* para que permita usar \n */
+}
+.auth-message-success {
+    color: var(--color-accent);
+}
+.auth-message-error {
+    color: var(--color-error);
 }

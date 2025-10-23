@@ -2,19 +2,22 @@
 require_once __DIR__ . '/usuario.php';
 require_once __DIR__ . '/usuarioSQL.php';
 require_once __DIR__ . '/../services/fileUploader.php';
+require_once __DIR__ . '/../services/mailService.php';
 
 
 class authController
 {
     private $conn;
     private $usuarioSQL;
-    private $uploader;
+    private $fileuUploader;
+    private $mailService;
 
     public function __construct($conn)
     {
         $this->conn = $conn;
         $this->usuarioSQL = new usuarioSQL($conn);
-        $this->uploader = new fileUploader(__DIR__ . '/../../assets/userPhotos');
+        $this->fileuUploader = new fileUploader(__DIR__ . '/../../assets/userPhotos');
+        $this->mailService = new mailService();
     }
 
     public function register()
@@ -58,17 +61,64 @@ class authController
             // Procesar imagen
             $photoPath = null;
             if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
-                $photoPath = $this->uploader->upload($_FILES['photo']);
+                $photoPath = $this->fileuUploader->upload($_FILES['photo']);
             }
 
             // Crear objeto usuario
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-            $usuario = new Usuario($role, $id, $name, $lastname, $birthdate, $email, $phone, $passwordHash, $photoPath, $estado);
+
+            //Se genera token para verificar cuenta
+            $token = bin2hex(random_bytes(16));
+
+            $usuario = new Usuario($role, $id, $name, $lastname, $birthdate, $email, $phone, $passwordHash, $photoPath, $estado, $token);
 
             // Guardar en base de datos
             $this->usuarioSQL->insertar($usuario);
 
+            if ($this->mailService !== null) {
+                $this->mailService->sendVerificationMail($usuario);
+            }
+
             echo json_encode(['success' => 'Usuario registrado correctamente']);
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo json_encode(['error' => $e->getMessage()]);
+        } finally {
+            $this->conn->close();
+        }
+    }
+
+    public function verifyAccount ()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            http_response_code(405);
+            echo json_encode(['error' => 'Metodo no permitido']);
+            return;
+        }
+
+        try {
+            //Se recolecta el token de la url
+            $token = trim($_GET['token'] ?? '');
+
+            if (empty($token)) {
+                throw new Exception('No se envio ningun token');
+            }
+
+            $emailObtenido = $this->usuarioSQL->changeStatus($token);
+
+            if ($emailObtenido) {
+                echo json_encode([
+                    'success' => true,
+                    'email' => $emailObtenido
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'error' => 'No se encontro el token enviado'
+                ]);
+            }
+
+
         } catch (Exception $e) {
             http_response_code(400);
             echo json_encode(['error' => $e->getMessage()]);

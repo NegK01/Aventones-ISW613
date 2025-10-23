@@ -55,21 +55,37 @@ form.addEventListener('submit', async (e) => { // funcion asincrona para usar aw
         const result = await response.json(); // esperar que se convierta la respuesta en un JSON, ocupa await pues el .json es una promesa, por lo que viene del servidor el cual debe leer y procesar la informacion
 
         if (result.success) {
-            messageBox.textContent = 'Registro exitoso. Redirigiendo...';
-            setTimeout(() => {
-                // window.location.href = '../pages/login.php';
-                // TODO, Buscar alguna forma de mostrar un modal con un boton de aceptar informando al usuario de que revise su email para confirmar la cuenta, el email que se enviara debera tener una redireccion como la siguiente pero con email dinamico, ademas la url se abre desde fuera de nuestra web por lo que deberiamos tener una ruta directa o mantenerla relativa y agregarle el __DIR__ para que se busque por si solo, cuando se acepte el modal alli si redirige a login
-                // Redireccionar a Login
-                //header("Location: ../pages/login.php?email=si@gmail.com");
-            }, 1500);
+            mostrarMessage('success');
         } else {
-            messageBox.textContent = `${result.error || 'Ocurrió un error.'}`; //alerta o messagebox, ya tocara verlo
-            messageBox.style.color = 'red';
+            mostrarMessage('error', result.error);
         }
-
     } catch (error) {
-        messageBox.textContent = 'Error de conexion con el servidor.';
-        messageBox.style.color = 'red';
-        console.error(error);
+        mostrarMessage('fatal', error.message);
     }
 });
+
+// Metodo para mostrar un mensaje de estado y su error, ademas de limpiar el campo tras 8 segundos en caso de un fallo y 15 segundos en caso de ser exitoso
+function mostrarMessage(estado, errorMessage = null) {
+    messageBox.classList.remove('auth-message-error', 'auth-message-success');
+    if (estado === 'success') {
+        messageBox.textContent = 'Registro exitoso. \n Revisa tu email para confirmar tu cuenta.';
+        messageBox.classList.add('auth-message-success');
+    } else if (estado === 'error') {
+        messageBox.textContent = errorMessage || 'Ocurrió un error.';
+        messageBox.classList.add('auth-message-error');
+    } else if (estado === 'fatal') {
+        messageBox.textContent = 'Error de conexion con el servidor.';
+        messageBox.classList.add('auth-message-error');
+        console.error(errorMessage);
+    }
+
+    if (estado !== 'success') {
+        setTimeout(() => {
+            messageBox.textContent = '';
+        }, 5500);
+    } else {
+        setTimeout(() => {
+            messageBox.textContent = '';
+        }, 15000);
+    }
+}
