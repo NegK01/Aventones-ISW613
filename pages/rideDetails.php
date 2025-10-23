@@ -12,14 +12,14 @@
     <link rel="stylesheet" href="../css/components/buttons.css">
     <link rel="stylesheet" href="../css/components/tables.css">
     <link rel="stylesheet" href="../css/components/cards.css">
-    <link rel="stylesheet" href="../css/pages/ride-details.css">
+    <link rel="stylesheet" href="../css/pages/rideDetails.css">
 </head>
 
 <body>
     <div class="app-container">
         <?php
         $activePage = 'details';
-        include '../components/header.php';
+        include 'components/header.php';
         ?>
         <main class="main-content">
             <div class="section">
@@ -27,7 +27,7 @@
                     <h2 class="section-title">Detalles del Ride</h2>
                 </div>
                 <div class="section-content">
-                    <div class="ride-details-container">
+                    <div class="rideDetails-container">
                         <div class="driver-info">
                             <div class="driver-photo">
                                 <img src="#" alt="Driver Photo">

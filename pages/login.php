@@ -18,7 +18,7 @@
     <div class="app-container">
         <?php
         $activePage = 'inicio';
-        include '../components/header.php';
+        include 'components/header.php';
         ?>
 
         <main class="main-content">
@@ -57,7 +57,7 @@
                     <div class="auth-footer">
                         <p>
                             ¿No tienes una cuenta?
-                            <a href="register.html" class="auth-link">Regístrate</a>
+                            <a href="../pages/registration.php" class="auth-link">Regístrate</a>
                         </p>
                     </div>
                 </div>
