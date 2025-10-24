@@ -17,6 +17,9 @@
 .btn-primary:hover {
     background-color: var(--color-accent-hover);
 }
+.btn-none-decoration {
+    text-decoration: none;
+}
 .btn-secondary {
     background-color: var(--color-panel-light);
     color: var(--color-text);

@@ -1,5 +1,7 @@
 <?php
-header('Content-Type: application/json'); // importante para fetch
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // Require de una vez para no realizar multiples conexiones 
 // DIR para encontrar connection.php de donde sea que sea que se llame
 require_once __DIR__ . '/../common/connection.php';
@@ -23,10 +25,16 @@ $allowedControllers = [
     'profile'      => 'profileController'
 ];
 
+// Aciones publicas que pueden hacer cualquier usuario sin tener valores seteados en su sessionid
+// controlador => ['accion/metodo/funcion del controlador']
+$publicActions = [
+    'auth' => ['login', 'register', 'verifyAccount', 'logout']
+];
+
 // Validar si el controlador dado esta en nuestro map
 if (!isset($allowedControllers[$controllerName])) {
     http_response_code(400);
-    echo json_encode(['error' => 'Controlador no válido']);
+    echo json_encode(['error' => 'Controlador no valido']);
     exit;
 }
 
@@ -48,7 +56,15 @@ $controller = new $className($conn);
 // Validar metodo
 if (!method_exists($controller, $action)) {
     http_response_code(400);
-    echo json_encode(['error' => 'Acción no válida']);
+    echo json_encode(['error' => 'Accion no valida']);
+    exit;
+}
+
+$isPublicAction = isset($publicActions[$controllerName]) && in_array($action, $publicActions[$controllerName], true);
+
+if (!$isPublicAction && empty($_SESSION['user_id'])) {
+    http_response_code(401);
+    echo json_encode(['error' => 'Sesion expirada']);
     exit;
 }
 

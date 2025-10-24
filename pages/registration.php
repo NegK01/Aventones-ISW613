@@ -1,3 +1,12 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!empty($_SESSION['user_id'])) {
+    header('Location: ../index.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -18,7 +27,7 @@
 <body>
     <div class="app-container">
         <?php
-        $activePage = 'inicio';
+        $activePage = 'none';
         include 'components/header.php'
         ?>
 
@@ -192,7 +201,7 @@
             </section>
         </main>
     </div>
-    <script src="../js/registration.js"></script>
+    <script src="../js/auth/registration.js"></script>
 </body>
 
 </html>

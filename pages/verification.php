@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/../common/authGuard.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -33,7 +36,7 @@
         </main>
     </div>
 
-    <script src="../js/verification.js"></script>
+    <script src="../js/auth/verification.js"></script>
 </body>
 
 </html>
