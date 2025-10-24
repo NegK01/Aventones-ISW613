@@ -1,6 +1,3 @@
-<?php
-require_once __DIR__ . '/../common/authGuard.php';
-?>
 <!DOCTYPE html>
 <html lang="es">
 
