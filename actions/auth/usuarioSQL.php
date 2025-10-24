@@ -24,7 +24,7 @@ class usuarioSQL
 
         $stmt = $this->conn->prepare("
             INSERT INTO usuarios 
-            (id_rol, cedula, nombre, apellido, nacimiento, correo, telefono, fotografia, contraseña, id_estado, token)
+            (id_rol, cedula, nombre, apellido, nacimiento, correo, telefono, fotografia, contrasena, id_estado, token)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
         $stmt->bind_param(
@@ -47,6 +47,29 @@ class usuarioSQL
         }
 
         $stmt->close();
+    }
+
+    public function obtenerUserPorCorreo(string $correo)
+    {
+        $stmt = $this->conn->prepare("
+            SELECT id_usuario, id_rol, contrasena, id_estado
+            FROM usuarios
+            WHERE correo = ?
+            LIMIT 1
+        ");
+        $stmt->bind_param("s", $correo);
+
+        if (!$stmt->execute()) {
+            throw new Exception("Error al obtener el usuario: " . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+        // verificamos que el fetch assoc tenga algo sino sera nulo, luego guardamos el resultado en la variable usuarios, que dentro solo tendra las filas de [id_usuario] [id_rol] [contrasena] [id_estado]
+        $usuario = $result->fetch_assoc() ?: null;
+
+        $stmt->close();
+
+        return $usuario;
     }
 
     public function changeStatus(string $token)

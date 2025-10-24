@@ -193,7 +193,7 @@
                             <p>Tienes 3 rides activos</p>
                         </div>
                         <div class="card-footer">
-                            <a href="rides.html" class="btn btn-secondary">Ver todos</a>
+                            <a href="rides.html" class="btn btn-secondary btn-none-decoration">Ver todos</a>
                         </div>
                     </div>
                     <div class="card">
@@ -206,7 +206,7 @@
                         <div class="card-footer">
                             <a
                                 href="vehicles.html"
-                                class="btn btn-secondary">Ver todos</a>
+                                class="btn btn-secondary btn-none-decoration">Ver todos</a>
                         </div>
                     </div>
                     <div class="card">
@@ -219,7 +219,7 @@
                         <div class="card-footer">
                             <a
                                 href="reservations.html"
-                                class="btn btn-secondary">Ver todas</a>
+                                class="btn btn-secondary btn-none-decoration">Ver todas</a>
                         </div>
                     </div>
                 </div>
