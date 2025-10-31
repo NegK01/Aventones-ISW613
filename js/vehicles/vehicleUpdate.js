@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         form.vehicleColor.value = vehicle.color || '';
         form.vehiclePlate.value = vehicle.placa || '';
         form.vehicleSeats.value = vehicle.asientos || '';
-        form.vehicleStatus.value = vehicle.id_estado === 4 ? 'activo' : 'inactivo';
+        form.vehicleStatus.value = vehicle.id_estado || 4;
         // Mostrar la foto del vehiculo si existe
         mostrarFotoVehiculo(true, vehicle.fotografia || '');
 

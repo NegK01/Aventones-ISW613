@@ -5,8 +5,8 @@ $vehicleId = $_POST['vehicleId'] ?? null;
 $isEditMode = !empty($vehicleId);
 
 $statusOptions = [
-    'activo' => 'Activo',
-    'inactivo' => 'Inactivo',
+    4 => 'Activo',
+    5 => 'Inactivo',
 ];
 
 $pageTitle = $isEditMode ? 'Editar Vehiculo' : 'Agregar Vehiculo';

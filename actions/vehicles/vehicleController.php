@@ -36,14 +36,7 @@ class vehicleController
             $color = trim($_POST['vehicleColor'] ?? '');
             $licensePlate = trim($_POST['vehiclePlate'] ?? '');
             $seats = trim($_POST['vehicleSeats'] ?? '');
-            $stateInput = strtolower(trim($_POST['vehicleStatus'] ?? 'activo')); // Por defecto Activo
-
-            //Cambiar de texto a id el estado
-            $estadoMap = [
-                'activo' => 4,
-                'inactivo' => 5,
-            ];
-            $stateId = $estadoMap[$stateInput] ?? 4; // Por defecto Activo (4) por si llega un texto no esperado
+            $stateId = $_POST['vehicleStatus'] ?? 4; // Por defecto Activo
 
             // Validar datos
             if (empty($idUser) || empty($licensePlate) || empty($color) || empty($brand) || empty($model) || empty($year) || empty($seats)) {
@@ -140,14 +133,7 @@ class vehicleController
             $color = trim($_POST['vehicleColor'] ?? '');
             $licensePlate = trim($_POST['vehiclePlate'] ?? '');
             $seats = trim($_POST['vehicleSeats'] ?? '');
-            $stateInput = strtolower(trim($_POST['vehicleStatus'] ?? 'activo')); // Por defecto Activo
-
-            //Cambiar de texto a id el estado
-            $estadoMap = [
-                'activo' => 4,
-                'inactivo' => 5,
-            ];
-            $statusId = $estadoMap[$stateInput] ?? 4; // Por defecto Activo (4) por si llega un texto no esperado
+            $statusId = $_POST['vehicleStatus'] ?? 4; // Por defecto Activo
 
             // Validar datos
             if (empty($vehicleId)) {
