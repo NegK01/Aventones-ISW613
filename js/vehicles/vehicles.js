@@ -1,10 +1,10 @@
 ﻿document.addEventListener('DOMContentLoaded', async () => {
+    // Seleccionar el tbody y el formulario invisible donde guardaremos el data id del vehiculo seleccionado para enviarlo a la pagina de editar vehiculo donde se agarra con metodo post
     const tableBody = document.getElementById('vehicles-tbody');
     const vehicleForm = document.getElementById('vehicle-form');
 
     try {
         const response = await fetch('../actions/handler.php?controller=vehicles&action=mostrarVehiculos');
-
         const result = await response.json();
 
         if (!result.success) {
@@ -52,9 +52,11 @@
 
         tableBody.innerHTML = rows;
 
+        // Seleccionar los botones despues de renderizar la tabla
         const editVehicle = document.querySelectorAll('[vehicle-action="edit"]');
         const deleteVehicle = document.querySelectorAll('[vehicle-action="delete"]');
 
+        // Agregar eventos a los botones de editar
         editVehicle.forEach((button) => {
             button.addEventListener('click', (event) => {
                 event.preventDefault();
@@ -67,6 +69,7 @@
             });
         });
 
+        // Agregar eventos a los botones de eliminar
         deleteVehicle.forEach((button) => {
             button.addEventListener('click', async (event) => {
                 event.preventDefault();
