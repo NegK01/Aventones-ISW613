@@ -15,7 +15,6 @@ require_once __DIR__ . '/../common/authGuard.php';
     <link rel="stylesheet" href="../css/components/buttons.css">
     <link rel="stylesheet" href="../css/components/tables.css">
     <link rel="stylesheet" href="../css/components/tabs.css">
-    <link rel="stylesheet" href="../css/components/badges.css">
 </head>
 
 <body>

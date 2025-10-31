@@ -65,17 +65,17 @@ function mostrarMessage(estado, errorMessage = null) {
         return;
     }
 
-    messageBox.classList.remove('auth-message-error', 'auth-message-success');
+    messageBox.classList.remove('message-error', 'message-success');
 
     if (estado === 'success') {
         messageBox.textContent = 'Registro exitoso. Revisa tu email para confirmar tu cuenta.';
-        messageBox.classList.add('auth-message-success');
+        messageBox.classList.add('message-success');
     } else if (estado === 'error') {
         messageBox.textContent = errorMessage || 'Ocurrio un error.';
-        messageBox.classList.add('auth-message-error');
+        messageBox.classList.add('message-error');
     } else if (estado === 'fatal') {
         messageBox.textContent = 'Error de conexion con el servidor.';
-        messageBox.classList.add('auth-message-error');
+        messageBox.classList.add('message-error');
     }
 
     const timeout = estado === 'success' ? 15000 : 5500;

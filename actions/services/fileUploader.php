@@ -1,9 +1,13 @@
 <?php
 class fileUploader {
-    private $uploadDir; // Direccion donde guardaremos las fotos
+    private $relativeDir; // Direccion relativa obtenida del constructor
+    private $uploadDir; // Direccion absoluta construida
 
     public function __construct($dir){
-        $this->uploadDir = rtrim($dir, "/") . "/";
+        $this->relativeDir = $dir;  // assets/userPhotos
+        $projectRoot = dirname(__DIR__, 2); // Ir dos carpetas hacia arriba
+        $this->uploadDir = $projectRoot . '/' . $this->relativeDir . '/'; 
+        // C:/xampp/htdocs/Proyecto-1/assets/userPhotos/
     }
 
     public function upload($file) {
@@ -33,6 +37,6 @@ class fileUploader {
         }
 
         // Retorna ruta relativa para guardar en BD
-        return 'assets/' . $fileName;
+        return '../' . $this->relativeDir . '/' . $fileName; // assets/userPhotos/nombre_unico.jpg
     }
 }

@@ -18,18 +18,6 @@
     color: var(--color-accent);
     text-decoration: none;
 }
-.auth-message {
-    display: block;
-    text-align: center;
-    font-weight: bold;
-    white-space: pre-line; /* para que permita usar \n */
-}
-.auth-message-success {
-    color: var(--color-accent);
-}
-.auth-message-error {
-    color: var(--color-error);
-}
 .auth-divider {
     display: flex;
     align-items: center;
