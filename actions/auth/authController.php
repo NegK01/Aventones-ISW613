@@ -8,14 +8,14 @@ class authController
 {
     private $conn;
     private $usuarioSQL;
-    private $fileuUploader;
+    private $fileUploader;
     private $mailService;
 
     public function __construct($conn)
     {
         $this->conn = $conn;
         $this->usuarioSQL = new usuarioSQL($conn);
-        $this->fileuUploader = new fileUploader(__DIR__ . '/../../assets/userPhotos');
+        $this->fileUploader = new fileUploader('assets/userPhotos');
         $this->mailService = new mailService();
     }
 
@@ -30,7 +30,7 @@ class authController
 
         try {
             // Recolectar datos del form
-            $role = trim($_GET['role'] ?? 2);
+            $role = trim($_GET['role'] ?? 2);   
             $name = trim($_POST['name'] ?? '');
             $lastname = trim($_POST['lastname'] ?? '');
             $id = trim($_POST['id'] ?? '');
@@ -61,13 +61,13 @@ class authController
             // Procesar imagen
             $photoPath = null;
             if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
-                $photoPath = $this->fileuUploader->upload($_FILES['photo']);
+                $photoPath = $this->fileUploader->upload($_FILES['photo']);
             }
 
-            // Crear objeto usuario
+            // Hashear contrasena
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-            //Se genera token para verificar cuenta
+            // Se genera token para verificar cuenta
             $token = bin2hex(random_bytes(16));
 
             // Crear el objeto usuario

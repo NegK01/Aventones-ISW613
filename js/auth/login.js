@@ -56,17 +56,17 @@ function mostrarMessage(estado, message = null) {
         return;
     }
 
-    messageBox.classList.remove('auth-message-error', 'auth-message-success');
+    messageBox.classList.remove('message-error', 'message-success');
 
     if (estado === 'success') {
         messageBox.textContent = message || 'Inicio de sesion exitoso. Redirigiendo...';
-        messageBox.classList.add('auth-message-success');
+        messageBox.classList.add('message-success');
     } else if (estado === 'error') {
         messageBox.textContent = message || 'Ocurrio un error.';
-        messageBox.classList.add('auth-message-error');
+        messageBox.classList.add('message-error');
     } else if (estado === 'fatal') {
         messageBox.textContent = message || 'Error de conexion con el servidor.';
-        messageBox.classList.add('auth-message-error');
+        messageBox.classList.add('message-error');
     }
 
     const timeout = estado === 'success' ? 15000 : 5500;
