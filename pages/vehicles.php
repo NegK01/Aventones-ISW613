@@ -58,7 +58,7 @@ require_once __DIR__ . '/../common/authGuard.php';
                 </div>
             </div>
             <form id="vehicle-form" method="post" action="vehicleForm.php" hidden>
-                <input type="hidden" name="vehicleId" id="vehicle-action-id">
+                <input type="hidden" name="vehicleId">
             </form>
         </main>
     </div>

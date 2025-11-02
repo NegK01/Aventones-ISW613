@@ -159,4 +159,28 @@ class vehicleSQL
 
         return $vehiculo;
     }
+
+    public function obtenerCapacidadVehiculo($vehicleId)
+    {
+        $stmt = $this->conn->prepare("
+        SELECT asientos FROM vehiculos WHERE id_vehiculo = ? 
+        ");
+
+        $stmt->bind_param("i", $vehicleId);
+
+        if (!$stmt->execute()) {
+            throw new Exception("Error al obtener capacidad del vehiculo: " . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+
+        if (!$result) {
+            throw new Exception("Error al procesar resultados: " . $stmt->error);
+        }
+
+        $vehiculo = $result->fetch_assoc();
+
+        $stmt->close();
+        return $vehiculo;
+    }
 }
