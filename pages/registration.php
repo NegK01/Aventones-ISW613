@@ -40,7 +40,7 @@ if (!empty($_SESSION['user_id'])) {
                         <p>Crea una nueva cuenta</p>
                     </div>
 
-                    <div id="form-message" class="auth-message"></div>
+                    <div id="form-message" class="message"></div>
 
                     <div class="tabs">
                         <button id="driver-tab" class="tab active" data-tab="driver-tab">

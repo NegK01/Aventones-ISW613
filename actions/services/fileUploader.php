@@ -1,9 +1,13 @@
 <?php
 class fileUploader {
-    private $uploadDir; // Direccion donde guardaremos las fotos
+    private $relativeDir; // Direccion relativa obtenida del constructor
+    private $uploadDir; // Direccion absoluta construida
 
     public function __construct($dir){
-        $this->uploadDir = rtrim($dir, "/") . "/";
+        $this->relativeDir = $dir;  // assets/userPhotos
+        $projectRoot = dirname(__DIR__, 2); // Ir dos carpetas hacia arriba
+        $this->uploadDir = $projectRoot . '/' . $this->relativeDir . '/'; 
+        // C:/xampp/htdocs/Proyecto-1/assets/userPhotos/
     }
 
     public function upload($file) {
@@ -33,6 +37,29 @@ class fileUploader {
         }
 
         // Retorna ruta relativa para guardar en BD
-        return 'assets/' . $fileName;
+        return '../' . $this->relativeDir . '/' . $fileName; // assets/userPhotos/nombre_unico.jpg
+    }
+
+    public function delete($file) {
+
+        if($file === null) {
+            return;
+        }
+
+        //file se conforma de assets + nombre de la foto, utilizamos basename para solo quedarnos con el nombre
+        $fileName = basename($file);
+
+        //construimos ruta absoluta de la foto
+        $filePath = $this->uploadDir . $fileName;
+
+        //verificamos si la ruta esta bien
+        if (!file_exists($filePath)) {
+            throw new Exception("No se encontro ningun archivo con la direccion dada");
+        }
+    
+        //eliminamos la foto con la ruta
+        if (!unlink($filePath)) {
+            throw new Exception("Error al eliminar la foto dada");
+        }
     }
 }

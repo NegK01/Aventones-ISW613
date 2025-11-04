@@ -38,7 +38,7 @@ if (!empty($_SESSION['user_id'])) {
                         <p>Ingresa tus credenciales para acceder</p>
                     </div>
 
-                    <div id="form-message" class="auth-message"></div>
+                    <div id="form-message" class="message"></div>
 
                     <form id="login-form" class="form">
                         <div class="form-group">
