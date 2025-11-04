@@ -1,6 +1,7 @@
 <?php
 class usuario
 {
+    private $id_user;
     private $rol; // [1=Administrador] [2=Pasajero] [3=Chofer] 
     private $cedula;
     private $nombre;
@@ -13,8 +14,9 @@ class usuario
     private $estado; // [1= Confirmado] [2= Pendiente] [3= Rechazado] [4= Activo] [5= Inactivo]
     private $token;
 
-    public function __construct($rol = 2, $cedula, $nombre, $apellido, $nacimiento, $correo, $telefono, $passwordHash, $foto = null, $estado = 2, $token) 
+    public function __construct($id_user, $rol = 2, $cedula, $nombre, $apellido, $nacimiento, $correo, $telefono, $passwordHash, $foto = null, $estado = 2, $token = null) 
     {
+        $this->id_user = $id_user;
         $this->rol = $rol;
         $this->cedula = $cedula;
         $this->nombre = $nombre;
@@ -29,6 +31,10 @@ class usuario
     }
 
     // Getters
+    public function getId_User()
+    {
+        return $this->id_user;
+    }
     public function getRol()
     {
         return $this->rol;

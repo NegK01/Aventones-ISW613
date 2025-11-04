@@ -49,6 +49,83 @@ class usuarioSQL
         $stmt->close();
     }
 
+    public function actualizar(Usuario $usuario) 
+    {
+        $id_usuario = $usuario->getId_User();
+        $cedula = $usuario->getCedula();
+        $nombre = $usuario->getNombre();
+        $apellido = $usuario->getApellido();
+        $nacimiento = $usuario->getNacimiento();
+        $correo = $usuario->getCorreo();
+        $telefono = $usuario->getTelefono();
+        $foto = $usuario->getFoto();
+        $password = $usuario->getPasswordHash();
+
+        //Preparamos los datos que sabemos que siempre vamos a tener
+        $stmt = $this->conn->prepare("
+            UPDATE usuarios SET 
+            cedula = ?, nombre = ?, apellido = ?, nacimiento = ?, correo = ?, telefono = ?, fotografia = ?, contrasena = ? 
+            WHERE id_usuario = ?
+        ");
+
+        $stmt->bind_param( 
+            "ssssssssi", 
+            $cedula, 
+            $nombre, 
+            $apellido, 
+            $nacimiento, 
+            $correo, 
+            $telefono, 
+            $foto, 
+            $password,
+            $id_usuario
+        );
+
+        if (!$stmt->execute()) {
+            throw new Exception("Error al actualizar el usuario: " . $stmt->error);
+        }
+
+        $stmt->close();
+    }
+
+    public function obtenerUsuarioPorId($Id_Usuario)
+    {
+        $stmt = $this->conn->prepare("
+            SELECT
+                u.id_usuario, u.id_rol, r.nombre AS rol, u.cedula, u.nombre,
+                u.apellido, u.nacimiento, u.correo, u.telefono, u.fotografia,
+                u.contrasena, u.id_estado, e.nombre AS estado, u.token
+            FROM
+                usuarios u
+            INNER JOIN
+                roles r ON u.id_rol = r.id_rol
+            INNER JOIN  -- ¡Aquí faltaba el 'INNER JOIN'!
+                estados e ON u.id_estado = e.id_estado
+            WHERE
+                u.id_usuario = ?
+            LIMIT 1
+        ");
+
+        $stmt->bind_param("i", $Id_Usuario);
+
+        if (!$stmt->execute()) {
+            throw new Exception("Error al obtener el usuario: " . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+
+        if (!$result) {
+            throw new Exception("Error al encontrar los resultados: " . $stmt->error);
+        }
+
+        //obtenemos los valores de el usuario
+        $usuario = $result->fetch_assoc() ?: null;
+
+        $stmt->close();
+        
+        return $usuario;
+    }
+
     public function obtenerUserPorCorreo(string $correo)
     {
         $stmt = $this->conn->prepare("

@@ -39,4 +39,27 @@ class fileUploader {
         // Retorna ruta relativa para guardar en BD
         return '../' . $this->relativeDir . '/' . $fileName; // assets/userPhotos/nombre_unico.jpg
     }
+
+    public function delete($file) {
+
+        if($file === null) {
+            return;
+        }
+
+        //file se conforma de assets + nombre de la foto, utilizamos basename para solo quedarnos con el nombre
+        $fileName = basename($file);
+
+        //construimos ruta absoluta de la foto
+        $filePath = $this->uploadDir . $fileName;
+
+        //verificamos si la ruta esta bien
+        if (!file_exists($filePath)) {
+            throw new Exception("No se encontro ningun archivo con la direccion dada");
+        }
+    
+        //eliminamos la foto con la ruta
+        if (!unlink($filePath)) {
+            throw new Exception("Error al eliminar la foto dada");
+        }
+    }
 }
