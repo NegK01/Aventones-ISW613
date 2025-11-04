@@ -30,7 +30,7 @@ class authController
 
         try {
             // Recolectar datos del form
-            $role = trim($_GET['role'] ?? 2);
+            $role = trim($_GET['role'] ?? 2);   
             $name = trim($_POST['name'] ?? '');
             $lastname = trim($_POST['lastname'] ?? '');
             $id = trim($_POST['id'] ?? '');
@@ -64,10 +64,10 @@ class authController
                 $photoPath = $this->fileUploader->upload($_FILES['photo']);
             }
 
-            // Crear la contraseña con hash
+            // Hashear contrasena
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-            //Se genera token para verificar cuenta
+            // Se genera token para verificar cuenta
             $token = bin2hex(random_bytes(16));
 
             // Crear el objeto usuario

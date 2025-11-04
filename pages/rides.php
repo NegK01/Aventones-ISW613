@@ -16,7 +16,6 @@ require_once __DIR__ . '/../common/authGuard.php';
     <link rel="stylesheet" href="../css/components/forms.css">
     <link rel="stylesheet" href="../css/components/tables.css">
     <link rel="stylesheet" href="../css/components/cards.css">
-    <link rel="stylesheet" href="../css/components/badges.css">
 </head>
 
 <body>
@@ -28,15 +27,15 @@ require_once __DIR__ . '/../common/authGuard.php';
         <main class="main-content">
             <div class="section">
                 <div class="section-header">
-                    <h2 class="section-title">Gestión de Rides</h2>
+                    <h2 class="section-title">Gestion de Rides</h2>
                 </div>
                 <div class="section-content">
                     <div class="form-row">
                         <div class="form-column">
-                            <input type="text" class="form-input" placeholder="Buscar rides...">
+                            <input type="text" class="form-input" name="search" placeholder="Buscar rides...">
                         </div>
                         <div class="form-column text-right">
-                            <button class="btn btn-primary">Crear Nuevo Ride</button>
+                            <a href="rideForm.php" class="btn btn-primary btn-none-decoration" data-rides-action="create">Crear Nuevo Ride</a>
                         </div>
                     </div>
                     <div class="table-container">
@@ -49,63 +48,22 @@ require_once __DIR__ . '/../common/authGuard.php';
                                     <th>Fecha/Hora</th>
                                     <th>Costo</th>
                                     <th>Asientos</th>
-                                    <th>Vehículo</th>
+                                    <th>Vehiculo</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Viaje a la Universidad</td>
-                                    <td>Cumbayá</td>
-                                    <td>USFQ</td>
-                                    <td>18/05/2025 08:00</td>
-                                    <td>$2.50</td>
-                                    <td>3</td>
-                                    <td>Toyota Corolla (2020)</td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-secondary">Editar</button>
-                                            <button class="btn btn-secondary">Eliminar</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Viaje de regreso a casa</td>
-                                    <td>USFQ</td>
-                                    <td>Cumbayá</td>
-                                    <td>18/05/2025 17:00</td>
-                                    <td>$2.50</td>
-                                    <td>4</td>
-                                    <td>Toyota Corolla (2020)</td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-secondary">Editar</button>
-                                            <button class="btn btn-secondary">Eliminar</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Viaje al aeropuerto</td>
-                                    <td>Centro Norte</td>
-                                    <td>Aeropuerto Mariscal Sucre</td>
-                                    <td>20/05/2025 10:00</td>
-                                    <td>$5.00</td>
-                                    <td>2</td>
-                                    <td>Honda Civic (2022)</td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-secondary">Editar</button>
-                                            <button class="btn btn-secondary">Eliminar</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tbody id="rides-tbody">
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            <form id="ride-form" method="post" action="rideForm.php" hidden>
+                <input type="hidden" name="rideId">
+            </form>
         </main>
     </div>
+    <script src="../js/rides/rides.js"></script>
 </body>
 
 </html>

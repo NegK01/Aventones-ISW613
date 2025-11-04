@@ -7,7 +7,7 @@ require_once __DIR__ . '/../common/authGuard.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aventones - Vehículos</title>
+    <title>Aventones - Vehiculos</title>
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/utilities.css">
@@ -15,7 +15,6 @@ require_once __DIR__ . '/../common/authGuard.php';
     <link rel="stylesheet" href="../css/components/buttons.css">
     <link rel="stylesheet" href="../css/components/forms.css">
     <link rel="stylesheet" href="../css/components/tables.css">
-    <link rel="stylesheet" href="../css/components/badges.css">
 </head>
 
 <body>
@@ -27,15 +26,15 @@ require_once __DIR__ . '/../common/authGuard.php';
         <main class="main-content">
             <div class="section">
                 <div class="section-header">
-                    <h2 class="section-title">Mis Vehículos</h2>
+                    <h2 class="section-title">Mis Vehiculos</h2>
                 </div>
                 <div class="section-content">
                     <div class="form-row">
                         <div class="form-column">
-                            <input type="text" class="form-input" placeholder="Buscar vehículos...">
+                            <input type="text" class="form-input" placeholder="Buscar vehiculos...">
                         </div>
                         <div class="form-column text-right">
-                            <button class="btn btn-primary">Agregar Vehículo</button>
+                            <a href="vehicleForm.php" class="btn btn-primary btn-none-decoration" vehicle-action="create">Agregar Vehiculo</a>
                         </div>
                     </div>
                     <div class="table-container">
@@ -44,7 +43,7 @@ require_once __DIR__ . '/../common/authGuard.php';
                                 <tr>
                                     <th>Marca</th>
                                     <th>Modelo</th>
-                                    <th>Año</th>
+                                    <th>Anio</th>
                                     <th>Color</th>
                                     <th>Placa</th>
                                     <th>Capacidad</th>
@@ -52,44 +51,18 @@ require_once __DIR__ . '/../common/authGuard.php';
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Toyota</td>
-                                    <td>Corolla</td>
-                                    <td>2020</td>
-                                    <td>Gris</td>
-                                    <td>ABC-1234</td>
-                                    <td>5</td>
-                                    <td><span class="badge green-badge">Activo</span></td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-secondary">Editar</button>
-                                            <button class="btn btn-secondary">Eliminar</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Honda</td>
-                                    <td>Civic</td>
-                                    <td>2022</td>
-                                    <td>Azul</td>
-                                    <td>XYZ-5678</td>
-                                    <td>5</td>
-                                    <td><span class="badge green-badge">Activo</span></td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-secondary">Editar</button>
-                                            <button class="btn btn-secondary">Eliminar</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tbody id="vehicles-tbody">
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            <form id="vehicle-form" method="post" action="vehicleForm.php" hidden>
+                <input type="hidden" name="vehicleId">
+            </form>
         </main>
     </div>
+    <script src="../js/vehicles/vehicles.js"></script>
 </body>
 
 </html>
