@@ -25,11 +25,12 @@
 
         <main class="main-content">
             <div class="section">
-                <div class="section-header">
+                <div class="section-header form-header">
                     <h2 class="section-title">Buscar Rides</h2>
+                    <div id="form-message" class="message"></div>
                 </div>
                 <div class="section-content">
-                    <form class="search-form">
+                    <form class="search-form" id="search-form">
                         <div class="form-row">
                             <div class="form-column">
                                 <label
@@ -38,6 +39,7 @@
                                 <input
                                     type="text"
                                     id="search-origin"
+                                    name="search-origin"
                                     class="form-input"
                                     placeholder="Origen" />
                             </div>
@@ -48,6 +50,7 @@
                                 <input
                                     type="text"
                                     id="search-destination"
+                                    name="search-destination"
                                     class="form-input"
                                     placeholder="Destino" />
                             </div>
@@ -97,8 +100,8 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
+                            <tbody id="rides-tbody">
+                                <!-- <tr>
                                     <td>Viaje a la Universidad</td>
                                     <td>Cumbaya</td>
                                     <td>USFQ</td>
@@ -116,12 +119,15 @@
                                             Reservar
                                         </button>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            <form id="ride-form" method="post" action="pages/rideForm.php" hidden>
+                <input type="hidden" name="rideId">
+            </form>
             <div class="section">
                 <div class="section-header">
                     <h3 class="section-title">Rides Populares</h3>
@@ -226,6 +232,8 @@
             </div>
         </main>
     </div>
+    <script src="js/mostrarMensaje.js"></script>
+    <script src="js/search/search.js"></script>
 </body>
 
 </html>

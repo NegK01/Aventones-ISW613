@@ -124,7 +124,7 @@ class authController
             $passwordConfirm = $_POST['profile-confirm-password'] ?? '';
 
             // Validaciones
-            if (empty($name) || empty($lastname) || empty($id) || empty($birthdate) || empty    ($email) || empty($phone)) {
+            if (empty($name) || empty($lastname) || empty($id) || empty($birthdate) || empty($email) || empty($phone)) {
                 throw new Exception('Todos los campos son obligatorios');
             }
             if (!$email) {

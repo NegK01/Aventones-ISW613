@@ -118,7 +118,7 @@ require_once __DIR__ . '/../common/authGuard.php';
             </div>
         </main>
     </div>
-
+    <script src="../js/mostrarMensaje.js"></script>
     <script src="../js/auth/profile.js"></script>
 
 </body>
