@@ -77,29 +77,3 @@ profileForm.addEventListener("submit", async (e) => {
         mostrarMessage("fatal", error.message);
     }
 });
-
-function mostrarMessage(estado, Message = null) {
-    if (!messageBox) {
-        return;
-    }
-
-    messageBox.classList.remove("message-error", "message-success");
-
-    if (estado === "success") {
-        messageBox.textContent = Message;
-        messageBox.classList.add("message-success");
-    } else if (estado === "error") {
-        messageBox.textContent = Message || "Ocurrio un error.";
-        messageBox.classList.add("message-error");
-    } else if (estado === "fatal") {
-        messageBox.textContent = "Error de conexion con el servidor.";
-        messageBox.classList.add("message-error");
-    }
-
-    const timeout = 5500;
-    setTimeout(() => {
-        if (messageBox) {
-            messageBox.textContent = "";
-        }
-    }, timeout);
-}

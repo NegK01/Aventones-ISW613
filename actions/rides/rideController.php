@@ -275,6 +275,41 @@ class rideController
         }
     }
 
+    public function searchRides() {
+        // bloquear otros metodos
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['error' => 'Metodo no permitido']);
+            return;
+        }
+
+        //Obtenemos variables del form
+        $origen = trim($_POST['search-origin'] ?? '');
+        $destino = trim($_POST['search-destination'] ?? '');
+
+        try {
+
+            //validamos que el usuario seleccione origen y destino o nada
+            if (empty($origen) xor empty($destino)) {
+                throw new Exception('Debe elegir un origen y un destino.');
+            }
+
+            $rides = $this->rideSQL->obtenerRidesFiltrados($origen, $destino);
+            echo json_encode([
+                'success' => true,
+                'rides'   => $rides
+            ]);
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo json_encode([
+                'success' => false,
+                'error'   => $e->getMessage()
+            ]);
+        } finally {
+            $this->conn->close();
+        }
+    }
+
     // Este metodo es para obtener los vehiculos del usuario y mostrarlos en el input de seleccion de vehiculos al momento de crear un ride
     public function mostrarVehiculos()
     {
