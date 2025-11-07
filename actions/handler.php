@@ -28,7 +28,8 @@ $allowedControllers = [
 // Aciones publicas que pueden hacer cualquier usuario sin tener valores seteados en su sessionid
 // controlador => ['accion/metodo/funcion del controlador']
 $publicActions = [
-    'auth' => ['login', 'register', 'verifyAccount', 'logout']
+    'auth' => ['login', 'register', 'verifyAccount', 'logout'],
+    'rides' => ['searchRides']
 ];
 
 // Validar si el controlador dado esta en nuestro map

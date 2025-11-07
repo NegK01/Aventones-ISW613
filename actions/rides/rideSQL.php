@@ -144,4 +144,43 @@ class rideSQL
         $stmt->close();
         return $ride;
     }
+
+    public function obtenerRidesFiltrados($origen, $destino)
+    {
+
+        //Se construye paso a paso la consulta sql para tomar en cuenta el caso que el usuario no busque con origen o destino
+
+        //Creamos la consulta base sin condicionales
+        $sql = "
+            SELECT 
+                r.*, DATE_FORMAT(r.fechaHora, '%Y-%m-%d %H:%i') AS fechaHoraFormateada, v.marca, v.modelo, v.anio 
+            FROM 
+                rides r 
+            JOIN 
+                vehiculos v ON r.id_vehiculo = v.id_vehiculo
+        ";
+
+        if (!empty($origen) && !empty($destino)) {
+            //En el caso de que el usuario busque con origen y destino
+            $sql .= " WHERE r.origen = ? AND r.destino = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("ss", $origen, $destino);
+
+        } else {
+            //Caso en que el usuario no busco algo en especifico
+            $stmt = $this->conn->prepare($sql);
+        }
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Error al obtener rides: " . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+
+        // Se ocupa el fetch all para obtener todos los registros como un arreglo asociativo, si se usa el fetch assoc solo devuelve una fila y las demas se pierden
+        $rides = $result->fetch_all(MYSQLI_ASSOC) ?: [];
+
+        $stmt->close();
+        return $rides;
+    }
 }
