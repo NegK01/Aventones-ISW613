@@ -48,7 +48,8 @@ if (!empty($_SESSION['user_id'])) {
                                 type="text"
                                 id="login-email"
                                 class="form-input"
-                                placeholder="email@ejemplo.com" />
+                                placeholder="email@ejemplo.com" 
+                                autocomplete="email"/>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="login-password">Contraseña</label>
@@ -89,6 +90,7 @@ if (!empty($_SESSION['user_id'])) {
         </main>
     </div>
 
+    <script src="../js/mostrarMensaje.js"></script>
     <script src="../js/auth/login.js"></script>
 </body>
 

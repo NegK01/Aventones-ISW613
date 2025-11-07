@@ -5,14 +5,14 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // si no hay user_id, manda al index (este guardia solo se encuentra en las paginas privadas)
 if (empty($_SESSION['user_id'])) {
-    header('Location: /Proyecto-1/pages/login.php');
+    header('Location: /Proyecto-1/index.php');
     exit();
 } 
 
 // array de paginas permitidas solo para admin
 $adminPages = [
     '/Proyecto-1/pages/adminDashboard.php',
-    '/Proyecto-1/pages/adminCreate.php',
+    '/Proyecto-1/pages/adminForm.php',
 ];
 
 // array de paginas permitidas solo para conductores
@@ -20,6 +20,7 @@ $driverPages = [
     '/Proyecto-1/index.php',
     '/Proyecto-1/pages/rides.php',
     '/Proyecto-1/pages/rideForm.php',
+    '/Proyecto-1/pages/rideDetails.php',
     '/Proyecto-1/pages/vehicles.php',
     '/Proyecto-1/pages/vehicleForm.php',
     '/Proyecto-1/pages/reservations.php',
@@ -31,6 +32,7 @@ $passengerPages = [
     '/Proyecto-1/index.php',
     '/Proyecto-1/pages/reservations.php',
     '/Proyecto-1/pages/profile.php',
+    '/Proyecto-1/pages/rideDetails.php',
 ];
 
 // arreglo de paginas permitidas segun el rol del usuario
@@ -42,8 +44,6 @@ $allowedPagesByRole = [
 
 // obtiene la ubicacion actual de la pagina despues del dominio
 $currentPath = $_SERVER['REQUEST_URI'];
-echo $currentPath;
-echo $_SESSION['idRole'];
 
 // redireccionar al admin a adminDashboard si intenta acceder a una pagina no permitida, los demas al index
 $userRole = $_SESSION['idRole'] ?? null;

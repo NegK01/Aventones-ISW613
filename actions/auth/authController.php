@@ -30,7 +30,7 @@ class authController
 
         try {
             // Recolectar datos del form
-            $role = trim($_GET['role'] ?? 2);   
+            $role = (int) $_POST['roleId'] ?? 2;
             $name = trim($_POST['name'] ?? '');
             $lastname = trim($_POST['lastname'] ?? '');
             $id = trim($_POST['id'] ?? '');
@@ -39,10 +39,10 @@ class authController
             $phone = trim($_POST['phone'] ?? '');
             $password = $_POST['password'] ?? '';
             $passwordConfirm = $_POST['password-confirmation'] ?? '';
-            $estado = 2;
+            $estado = (int) $_POST['statusId'] ?? 2;
 
             // Validaciones
-            if (!in_array($role, ['1', '2', '3'])) {
+            if (!in_array($role, [1, 2, 3])) {
                 throw new Exception('Rol invalido');
             }
             if (empty($name) || empty($lastname) || empty($id) || empty($birthdate) || empty($email) || empty($phone) || empty($password)) {
@@ -89,11 +89,15 @@ class authController
             // insertar el usuario en la base de datos
             $this->usuarioSQL->insertar($usuario);
 
-            if ($this->mailService !== null) {
+            // Enviar correo de verificacion si a todos los roles menos al administrador
+            if ($this->mailService !== null && $role !== 1) {
                 $this->mailService->sendVerificationMail($usuario);
+
+                echo json_encode(['success' => 'Registro exitoso. Revisa tu email para confirmar tu cuenta.']);
+                return;
             }
 
-            echo json_encode(['success' => 'Usuario registrado correctamente']);
+            echo json_encode(['success' => 'Registro exitoso, administrador creado correctamente.']);
         } catch (Exception $e) {
             http_response_code(400);
             echo json_encode(['error' => $e->getMessage()]);
@@ -102,7 +106,8 @@ class authController
         }
     }
 
-    public function update() {
+    public function update()
+    {
         // bloquear otros metodos
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);
@@ -143,7 +148,7 @@ class authController
                     throw new Exception('Todos los campos para cambiar la contraseña son abligatorios');
                 }
                 if (strlen($newPassword) < 3) {
-                throw new Exception('La contrasena debe tener al menos 3 caracteres');
+                    throw new Exception('La contrasena debe tener al menos 3 caracteres');
                 }
                 if (!password_verify($currentPassword, $passwordHash)) {
                     throw new Exception('Contraseña actual incorrecta');
@@ -183,8 +188,39 @@ class authController
 
             // actualizar el usuario en la base de datos
             $this->usuarioSQL->actualizar($usuario);
-            
+
             echo json_encode(['success' => 'Usuario actualizado correctamente']);
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo json_encode(['error' => $e->getMessage()]);
+        } finally {
+            $this->conn->close();
+        }
+    }
+
+    public function cambiarEstadoUsuario()
+    {
+        // bloquear otros metodos
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['error' => 'Metodo no permitido']);
+            return;
+        }
+
+        try {
+            // Recolectar datos del form
+            $id_usuario = trim($_POST['userId'] ?? '');
+            $id_estado = trim($_POST['statusId'] ?? '');
+
+            // Validaciones
+            if (empty($id_usuario) || empty($id_estado)) {
+                throw new Exception('Todos los campos son obligatorios');
+            }
+
+            // actualizar el estado del usuario en la base de datos
+            $this->usuarioSQL->actualizarEstado($id_usuario, $id_estado);
+
+            echo json_encode(['success' => 'Estado del usuario actualizado correctamente']);
         } catch (Exception $e) {
             http_response_code(400);
             echo json_encode(['error' => $e->getMessage()]);
@@ -209,7 +245,26 @@ class authController
                 'success' => true,
                 'user'    => $usuario
             ]);
-            
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo json_encode([
+                'success' => false,
+                'error'   => $e->getMessage()
+            ]);
+        } finally {
+            $this->conn->close();
+        }
+    }
+
+    public function cargarUsuarios($idEstado = 0)
+    {
+        try {
+            $usuarios = $this->usuarioSQL->obtenerTodosLosUsuarios($idEstado);
+
+            echo json_encode([
+                'success' => true,
+                'users'    => $usuarios
+            ]);
         } catch (Exception $e) {
             http_response_code(400);
             echo json_encode([
@@ -285,8 +340,12 @@ class authController
                 throw new Exception('Credenciales incorrectas');
             }
 
-            if ((int) $usuario['id_estado'] !== 4) {
-                throw new Exception('Cuenta no activa. Verifica tu correo.');
+            if ((int) $usuario['id_estado'] === 2) {
+                throw new Exception('Cuenta pendiente de activación. Verifica tu correo.');
+            } elseif ((int) $usuario['id_estado'] === 5) {
+                throw new Exception('Cuenta suspendida. Contacta al administrador.');
+            } else if ((int) $usuario['id_estado'] !== 4) {
+                throw new Exception('Estado de cuenta invalido. Contacta al administrador.');
             }
 
             if (!password_verify($password, $usuario['contrasena'])) {
@@ -297,9 +356,12 @@ class authController
             session_regenerate_id(true);
 
             $_SESSION['user_id'] = (int) $usuario['id_usuario'];
-            $_SESSION['role'] = (int) $usuario['id_rol'];
+            $_SESSION['idRole'] = (int) $usuario['id_rol'];
 
-            echo json_encode(['success' => true]);
+            echo json_encode([
+                'success' => 'Inicio de sesion exitoso. Redirigiendo...',
+                'idRole' => $usuario['id_rol']
+            ]);
         } catch (Exception $e) {
             http_response_code(400);
             echo json_encode(['error' => $e->getMessage()]);
