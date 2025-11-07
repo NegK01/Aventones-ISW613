@@ -54,6 +54,7 @@ if (!empty($_SESSION['user_id'])) {
                     <!-- Formulario de chofer y pasajero -->
                     <div class="tab-content active">
                         <form class="form" id="register-form" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="roleId" id="roleId" value="2" />
                             <div class="form-row">
                                 <div class="form-column">
                                     <div class="form-group">
@@ -201,6 +202,7 @@ if (!empty($_SESSION['user_id'])) {
             </section>
         </main>
     </div>
+    <script src="../js/mostrarMensaje.js"></script>
     <script src="../js/auth/registration.js"></script>
 </body>
 

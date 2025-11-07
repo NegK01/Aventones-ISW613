@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // la fecha tendra un formato de horas y minutos pero no segundos, hacerlo con format
             
             rows += `
-                <tr ${idAttr}>
+                <tr>
                     <td>${ride.nombre}</td>
                     <td>${ride.origen}</td>
                     <td>${ride.destino}</td>

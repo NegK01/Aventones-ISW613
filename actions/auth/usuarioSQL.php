@@ -49,7 +49,7 @@ class usuarioSQL
         $stmt->close();
     }
 
-    public function actualizar(Usuario $usuario) 
+    public function actualizar(Usuario $usuario)
     {
         $id_usuario = $usuario->getId_User();
         $cedula = $usuario->getCedula();
@@ -68,21 +68,44 @@ class usuarioSQL
             WHERE id_usuario = ?
         ");
 
-        $stmt->bind_param( 
-            "ssssssssi", 
-            $cedula, 
-            $nombre, 
-            $apellido, 
-            $nacimiento, 
-            $correo, 
-            $telefono, 
-            $foto, 
+        $stmt->bind_param(
+            "ssssssssi",
+            $cedula,
+            $nombre,
+            $apellido,
+            $nacimiento,
+            $correo,
+            $telefono,
+            $foto,
             $password,
             $id_usuario
         );
 
         if (!$stmt->execute()) {
             throw new Exception("Error al actualizar el usuario: " . $stmt->error);
+        }
+
+        $stmt->close();
+    }
+
+    // funcion que se usa para desactivar, activar, aprobar usuarios desde la gestion de administrador
+    public function actualizarEstado($id_usuario, $id_estado)
+    {
+        $stmt = $this->conn->prepare("
+            UPDATE usuarios SET 
+            id_estado = ?, 
+            token = NULL 
+            WHERE id_usuario = ?
+        ");
+
+        $stmt->bind_param(
+            "ii",
+            $id_estado,
+            $id_usuario
+        );
+
+        if (!$stmt->execute()) {
+            throw new Exception("Error al actualizar el estado del usuario: " . $stmt->error);
         }
 
         $stmt->close();
@@ -122,8 +145,56 @@ class usuarioSQL
         $usuario = $result->fetch_assoc() ?: null;
 
         $stmt->close();
-        
+
         return $usuario;
+    }
+
+    public function obtenerTodosLosUsuarios($idEstado = 0)
+    {
+        $idEstado = (int)$idEstado;
+
+        $sql = "
+        SELECT 
+            u.id_usuario, u.nombre, u.apellido, u.correo, 
+            u.id_rol, r.nombre AS rol, u.fechaDeRegistro, 
+            u.id_estado, e.nombre AS estado, u.token 
+        FROM 
+            usuarios u 
+        INNER JOIN 
+            roles r ON u.id_rol = r.id_rol 
+        INNER JOIN 
+            estados e ON u.id_estado = e.id_estado
+        ";
+
+        // Si se solicita un rol específico
+        if ($idEstado !== 0) {
+            $sql .= " WHERE u.id_estado = ?";
+        }
+
+        // Se debe de ordernar al final, despues del WHERE
+        $sql .= " ORDER BY u.id_usuario ASC";
+
+        $stmt = $this->conn->prepare($sql);
+
+        if ($idEstado !== 0) {
+            $stmt->bind_param('i', $idEstado);
+        }
+
+        if (!$stmt->execute()) {
+            throw new Exception("Error al obtener los usuarios: " . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+
+        if (!$result) {
+            throw new Exception("Error al encontrar los resultados: " . $stmt->error);
+        }
+
+        $usuarios = $result->fetch_all(MYSQLI_ASSOC);
+
+        $stmt->close();
+
+        return $usuarios;
     }
 
     public function obtenerUserPorCorreo(string $correo)
