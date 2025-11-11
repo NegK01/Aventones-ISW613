@@ -39,7 +39,7 @@ $passengerPages = [
 $allowedPagesByRole = [
     1 => $adminPages,      // Admin
     2 => $driverPages,     // Conductor
-    3 => $passengerPages,  // Pasajero
+    3 => $passengerPages  // Pasajero
 ];
 
 // obtiene la ubicacion actual de la pagina despues del dominio

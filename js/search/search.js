@@ -4,6 +4,7 @@ const rideForm = document.getElementById("ride-form");
 const tableOrder = document.getElementById("sort-criteria");
 
 document.addEventListener("DOMContentLoaded", () => {
+
     cargarRides();
 
     searchForm.addEventListener("submit", (event) => {
@@ -96,31 +97,8 @@ async function cargarRides() {
                 }
                 rideForm.rideId.value = rideId;
 
-                try {
-                    const formData = new FormData(rideForm);
-                    const url =
-                        "../actions/handler.php?controller=rides&action=deleteRide";
-
-                    const response = await fetch(url, {
-                        method: "POST",
-                        body: formData,
-                    });
-
-                    const result = await response.json();
-
-                    if (!result.success) {
-                        alert(result.error || "Error al eliminar el ride.");
-                        return;
-                    }
-
-                    // eliminar dinamicamente la fila sin tener que refrescar la pagina
-                    const row = button.closest("tr");
-                    if (row) {
-                        tableBody.removeChild(row);
-                    }
-                } catch (error) {
-                    console.error("Error al eliminar el ride:", error);
-                }
+                // Esta funcion es de reserve.js y se manda el id del ride desde aca
+                reservarRide(rideForm);
             });
         });
 

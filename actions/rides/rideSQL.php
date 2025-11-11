@@ -130,7 +130,18 @@ class rideSQL
 
     public function obtenerRidePorId($rideId)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM rides WHERE id_ride = ?");
+        $stmt = $this->conn->prepare("
+            SELECT 
+                r.*, u.fotografia, u.nombre AS nombreUsuario, u.apellido AS apellidoUsuario, DATE_FORMAT(r.fechaHora, '%Y-%m-%d %H:%i') AS fechaHoraFormateada, v.marca, v.modelo, v.anio, v.color
+            FROM 
+                rides r 
+            JOIN 
+                vehiculos v ON r.id_vehiculo = v.id_vehiculo
+            JOIN 
+                usuarios u ON r.id_usuario = u.id_usuario
+            WHERE r.id_ride = ?
+        ");
+
         $stmt->bind_param("i", $rideId);
 
         if (!$stmt->execute()) {
@@ -153,7 +164,7 @@ class rideSQL
         //Creamos la consulta base sin condicionales
         $sql = "
             SELECT 
-                r.*, DATE_FORMAT(r.fechaHora, '%Y-%m-%d %H:%i') AS fechaHoraFormateada, v.marca, v.modelo, v.anio 
+                r.*, DATE_FORMAT(r.fechaHora, '%Y-%m-%d %H:%i') AS fechaHoraFormateada, v.marca, v.modelo, v.anio, v.color
             FROM 
                 rides r 
             JOIN 
