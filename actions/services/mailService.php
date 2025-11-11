@@ -66,7 +66,24 @@ class mailService
             $this->mail->send();
         } catch (Exception $e) {
 
-            echo "Error al enviar el mail: {$this->mail->ErrorInfo}";
+            echo "Error al enviar el email: {$this->mail->ErrorInfo}";
+        }
+    }
+
+    public function sendNotificationMail($correo)
+    {
+
+        //Limpia los posibles anteriores mail 
+        $this->mail->clearAllRecipients();
+        $this->mail->clearAttachments();
+
+        try {
+            $this->mail->addAddress($correo);
+            $this->mail->Subject = "Notificacion de reservas pendientes:";
+            $this->mail->Body    = "Posee solicitudes de reservas pendientes de confirmacion";
+            $this->mail->send();
+        } catch (Exception $e) {
+            echo "Error al enviar el email: {$this->mail->ErrorInfo}";
         }
     }
 }
