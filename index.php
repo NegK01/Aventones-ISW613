@@ -101,31 +101,12 @@
                                 </tr>
                             </thead>
                             <tbody id="rides-tbody">
-                                <!-- <tr>
-                                    <td>Viaje a la Universidad</td>
-                                    <td>Cumbaya</td>
-                                    <td>USFQ</td>
-                                    <td>18/05/2025 08:00</td>
-                                    <td>$2.50</td>
-                                    <td>3</td>
-                                    <td>Toyota Corolla (2020)</td>
-                                    <td class="table-actions">
-                                        <button
-                                            class="btn btn-secondary action-btn">
-                                            Ver detalles
-                                        </button>
-                                        <button
-                                            class="btn btn-primary action-btn">
-                                            Reservar
-                                        </button>
-                                    </td>
-                                </tr> -->
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <form id="ride-form" method="post" action="pages/rideForm.php" hidden>
+            <form id="ride-form" method="post" action="pages/rideDetails.php" hidden>
                 <input type="hidden" name="rideId">
             </form>
             <div class="section">
@@ -234,6 +215,7 @@
     </div>
     <script src="js/mostrarMensaje.js"></script>
     <script src="js/search/search.js"></script>
+    <script src="js/reserve/reserve.js"></script>
 </body>
 
 </html>

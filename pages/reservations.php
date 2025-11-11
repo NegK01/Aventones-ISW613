@@ -1,5 +1,9 @@
 <?php
 require_once __DIR__ . '/../common/authGuard.php';
+
+
+// Desde aca obtenemos el valor del rol para agregarlo a el form con informacion
+$userRole = $_SESSION['idRole'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -48,7 +52,7 @@ require_once __DIR__ . '/../common/authGuard.php';
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="reserves-tbody">
                                     <tr>
                                         <td>Viaje a la Universidad</td>
                                         <td>18/05/2025 08:00</td>
@@ -98,43 +102,23 @@ require_once __DIR__ . '/../common/authGuard.php';
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Viaje a la Universidad</td>
-                                        <td>11/05/2025 08:00</td>
-                                        <td>Cumbayá</td>
-                                        <td>USFQ</td>
-                                        <td>Juan Pérez</td>
-                                        <td>Toyota Corolla (2020)</td>
-                                        <td><span class="badge green-badge">Completado</span></td>
-                                        <td>
-                                            <div class="table-actions">
-                                                <a href="rideDetails.php" class="btn btn-secondary btn-none-decoration">Detalles</a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Viaje de regreso a casa</td>
-                                        <td>11/05/2025 17:00</td>
-                                        <td>USFQ</td>
-                                        <td>Cumbayá</td>
-                                        <td>Juan Pérez</td>
-                                        <td>Toyota Corolla (2020)</td>
-                                        <td><span class="badge green-badge">Completado</span></td>
-                                        <td>
-                                            <div class="table-actions">
-                                                <a href="rideDetails.php" class="btn btn-secondary btn-none-decoration">Detalles</a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <tbody id="reserves-tbody">
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+            <form id="reserve-form" method="post" action="rideDetails.php" hidden>
+                <input type="hidden" name="rideId">
+                <input type="hidden" name="reserveId">
+                <input type="hidden" name="reserveState">
+                <input type="hidden" name="userRole" value="<?= htmlspecialchars($userRole) ?>">
+            </form>
         </main>
     </div>
+    <script src="../js/mostrarMensaje.js"></script>
+    <script src="../js/reserve/reserve.js"></script>
 </body>
 
 </html>

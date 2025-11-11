@@ -21,7 +21,7 @@ $allowedControllers = [
     'auth'         => 'authController',
     'rides'        => 'rideController',
     'vehicles'     => 'vehicleController',
-    'reservations' => 'reservationController',
+    'reserves'     => 'reserveController',
     'profile'      => 'profileController'
 ];
 

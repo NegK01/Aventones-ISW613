@@ -20,6 +20,7 @@ $driverPages = [
     '/Proyecto-1/index.php',
     '/Proyecto-1/pages/rides.php',
     '/Proyecto-1/pages/rideForm.php',
+    '/Proyecto-1/pages/rideDetails.php',
     '/Proyecto-1/pages/vehicles.php',
     '/Proyecto-1/pages/vehicleForm.php',
     '/Proyecto-1/pages/reservations.php',
@@ -31,19 +32,18 @@ $passengerPages = [
     '/Proyecto-1/index.php',
     '/Proyecto-1/pages/reservations.php',
     '/Proyecto-1/pages/profile.php',
+    '/Proyecto-1/pages/rideDetails.php',
 ];
 
 // arreglo de paginas permitidas segun el rol del usuario
 $allowedPagesByRole = [
     1 => $adminPages,      // Admin
     2 => $driverPages,     // Conductor
-    3 => $passengerPages,  // Pasajero
+    3 => $passengerPages  // Pasajero
 ];
 
 // obtiene la ubicacion actual de la pagina despues del dominio
 $currentPath = $_SERVER['REQUEST_URI'];
-echo $currentPath;
-echo $_SESSION['idRole'];
 
 // redireccionar al admin a adminDashboard si intenta acceder a una pagina no permitida, los demas al index
 $userRole = $_SESSION['idRole'] ?? null;

@@ -297,7 +297,7 @@ class authController
             session_regenerate_id(true);
 
             $_SESSION['user_id'] = (int) $usuario['id_usuario'];
-            $_SESSION['role'] = (int) $usuario['id_rol'];
+            $_SESSION['idRole'] = (int) $usuario['id_rol'];
 
             echo json_encode(['success' => true]);
         } catch (Exception $e) {

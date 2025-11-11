@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__ . '/../common/authGuard.php';
+
+$rideId = $_POST['rideId'] ?? null;
+$isReserveMode = $_POST['userRole'] ?? false;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -26,84 +29,52 @@ require_once __DIR__ . '/../common/authGuard.php';
         ?>
         <main class="main-content">
             <div class="section">
-                <div class="section-header">
-                    <h2 class="section-title">Detalles del Ride</h2>
+                <div class="section-header form-header">
+                    <h2 class="section-title">Detalles de la reservacion</h2>
+                    <div id="form-message" class="message"></div>
                 </div>
                 <div class="section-content">
                     <div class="rideDetails-container">
                         <div class="driver-info">
                             <div class="driver-photo">
-                                <img src="#" alt="Driver Photo">
+                                <img src="#" id="driver-photo">
                             </div>
-                            <h3>Driver Info</h3>
-                            <p class="driver-name">Nombre Completo Conductor</p>
-                            <p class="driver-rating">⭐⭐⭐⭐☆</p>
-                            <p class="driver-trips">Viajes realizados: 123</p>
+                            <h3>Driver</h3>
+                            <p class="driver-name" id="driver-name">Nombre Completo Conductor</p>
                         </div>
                         <div class="ride-info">
-                            <h2 class="ride-title">Nombre del Ride</h2>
+                            <h2 class="ride-title" id="ride-title">Nombre del Ride</h2>
                             <h3>Información general del viaje</h3>
                             <table class="data-table ride-general-table">
-                                <tbody>
-                                    <tr>
-                                        <th>Origen:</th>
-                                        <td>Cumbayá</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Destino:</th>
-                                        <td>USFQ</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Fecha/Hora:</th>
-                                        <td>18/05/2025 08:00</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Costo por asiento:</th>
-                                        <td>$2.50</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Asientos disponibles / totales:</th>
-                                        <td>3/4</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Descripción:</th>
-                                        <td>Viaje diario a la universidad pasando por el parque central.</td>
-                                    </tr>
+                                <tbody id="ride-tbody">
                                 </tbody>
                             </table>
                             <div class="vehicle-info">
                                 <h3>Información del vehículo</h3>
                                 <table class="data-table vehicle-info-table">
-                                    <tbody>
-                                        <tr>
-                                            <th>Marca:</th>
-                                            <td>Toyota</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Modelo:</th>
-                                            <td>Corolla</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Año:</th>
-                                            <td>2020</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Color:</th>
-                                            <td>Gris</td>
-                                        </tr>
+                                    <tbody id="vehicle-tbody">
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                     <div class="action-buttons-container">
-                        <a href="../index.php" class="btn btn-secondary back-btn">Regresar</a>
-                        <button class="btn btn-primary reserve-btn">Reservar asiento</button>
+                        <a href="javascript:window.history.back()" class="btn btn-secondary back-btn">Regresar</a>
+                        <?php
+                            if (!$isReserveMode) {
+                                echo '<button type="submit" id="reserve-btn" class="btn btn-primary reserve-btn">Reservar asiento</button>';
+                            }
+                        ?>
                     </div>
                 </div>
             </div>
+            <form id="id-form" method="post" action="#" hidden>
+                <input type="hidden" name="rideId" value="<?php echo $rideId ?>">
+            </form>
         </main>
     </div>
+    <script src="../js/mostrarMensaje.js"></script>
+    <script src="../js/reserve/reserve.js"></script>
 </body>
 
 </html>
